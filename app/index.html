@@ -3,23 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Vice Trophy Tracker — GTA 6 Trophy Guide</title>
+<meta name="description" content="An offline guide and tracker for all 55 GTA 6 trophies on PlayStation 5: checklist, roadmap, missables, and a cited guide to each trophy.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Grand Theft Auto VI · PlayStation 5 · Offline guide</p>
+    <h1>Vice Trophy Tracker</h1>
+    <p class="lede">Every one of the 55 official trophies — name, description and grade — with a guide in our own words that cites its sources, a saved checklist, and a roadmap to the platinum.</p>
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-numbers"><span id="earned-count">0 / 55 earned</span><span id="earned-pct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <p class="grade-counts" id="grade-counts"></p>
+    </div>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
-<script type="module" src="app.js"></script>
+
+<nav class="tabs" aria-label="Sections">
+  <a href="#tracker" data-tab="tracker" class="tab active">Tracker</a>
+  <a href="#roadmap" data-tab="roadmap" class="tab">Roadmap</a>
+  <a href="#missables" data-tab="missables" class="tab">Missables</a>
+  <a href="#sources" data-tab="sources" class="tab">Sources &amp; method</a>
+</nav>
+
+<main>
+  <section id="view-tracker" class="view">
+    <div class="controls">
+      <label class="search">Search
+        <input id="search" type="search" placeholder="Trophy name or description…" autocomplete="off">
+      </label>
+      <label class="grade-filter">Grade
+        <select id="grade">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <div class="kind-chips" id="kind-chips" role="group" aria-label="Filter by kind">
+        <button type="button" data-kind="all" class="chip active">All</button>
+        <button type="button" data-kind="story" class="chip">Story</button>
+        <button type="button" data-kind="missable" class="chip">Missable</button>
+        <button type="button" data-kind="collectibles" class="chip">Collectibles</button>
+        <button type="button" data-kind="activities" class="chip">Activities</button>
+        <button type="button" data-kind="online" class="chip">Online</button>
+      </div>
+      <label class="toggle"><input id="spoilers" type="checkbox"> Hide story spoilers</label>
+      <label class="toggle"><input id="earned-only" type="checkbox"> Earned only</label>
+      <div class="io-buttons">
+        <button id="export" type="button">Export progress</button>
+        <label class="import-btn">Import progress <input id="import" type="file" accept="application/json,.json"></label>
+        <button id="reset" type="button" class="danger">Reset</button>
+      </div>
+    </div>
+    <p class="list-meta" id="list-meta"></p>
+    <div id="trophy-list" class="trophy-list"></div>
+    <p class="empty" id="empty-state" hidden>No trophies match these filters. Try clearing the search or choosing another kind.</p>
+  </section>
+
+  <section id="view-roadmap" class="view" hidden>
+    <h2>Roadmap to the platinum</h2>
+    <p class="roadmap-intro">PowerPyx rates the set 4 out of 10 in difficulty and about 200 hours, in a single playthrough, with no online trophies and no DLC needed. The story takes about 60 to 80 hours across five chapters. Keep cheats off for the whole run — using any cheat disables trophies and saving (PowerPyx via GTABase).</p>
+    <div id="roadmap-stages"></div>
+  </section>
+
+  <section id="view-missables" class="view" hidden>
+    <h2>Missable trophies</h2>
+    <p>PowerPyx flags exactly one trophy as possibly missable. Every story trophy is unmissable — all 12 unlock automatically as you play the story, so there is nothing to protect there. The list below is built from the official descriptions and the published guides, and it says plainly where a trigger is not pinned down yet.</p>
+    <div id="missable-list"></div>
+    <h3>Why the rest are safe</h3>
+    <p>Every other trophy is earned in free roam, in repeatable activities, or by finishing story content that stays available after the credits. The 100% completion checklist opens after the story and earlier progress counts toward it, so nothing on the road to A Long Road can be missed either (GTABase).</p>
+  </section>
+
+  <section id="view-sources" class="view" hidden>
+    <h2>Sources &amp; method</h2>
+    <p>Official names, descriptions and grades come from the official list as Exophase and PSNProfiles publish it — the two agree on every name, description and grade. Counts (such as 250 stunts or 42 Shooting Range challenges) come from PSNProfiles' tracker. Roadmap timing, the difficulty rating and the one missable flag come from PowerPyx's GTA 6 trophy guide, cross-checked against GTABase's trophy list. Every guide on this page is written in our own words for this tracker; where a trigger is not pinned down in any published guide yet, the guide says so instead of inventing a location.</p>
+    <ul class="source-list" id="source-list"></ul>
+    <h3>How this tracker works</h3>
+    <p>Your ticks and counters are saved in this browser only (localStorage) — nothing leaves your machine. Export downloads them as a JSON file; import reads one back. The spoiler setting hides the names, descriptions and guides of the 28 hidden trophies until you earn them. This page loads no network resources at all and works with the network off.</p>
+    <h3>About this guide</h3>
+    <p>Vice Trophy Tracker is an independent, fan-made guide. It is not affiliated with Rockstar Games, and it uses no Rockstar logo, artwork or game screenshots. GTA 6 released on 19 November 2026; this guide was written from the official trophy list and the launch-week guides named above, and it will be updated as the community pins down the triggers that are still unconfirmed.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Vice Trophy Tracker — an offline, open guide to the 55 GTA 6 trophies. Progress is stored in your browser only.</p>
+</footer>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
